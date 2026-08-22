@@ -5,12 +5,12 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import pp.ua.shopinglist.persistence.security.entity.Role;
-import pp.ua.shopinglist.persistence.security.entity.User;
-import pp.ua.shopinglist.persistence.security.repository.UserRepository;
 import pp.ua.shopinglist.dto.auth.AuthResponse;
 import pp.ua.shopinglist.dto.auth.LoginRequest;
 import pp.ua.shopinglist.dto.auth.RegisterRequest;
+import pp.ua.shopinglist.persistence.security.entity.Role;
+import pp.ua.shopinglist.persistence.security.entity.User;
+import pp.ua.shopinglist.persistence.security.repository.UserRepository;
 
 @Service
 public class AuthService {
@@ -59,13 +59,13 @@ public class AuthService {
                 )
         );
 
-        CustomUserDetails userDetails =
-                (CustomUserDetails) authentication.getPrincipal();
+        if (!(authentication.getPrincipal() instanceof CustomUserDetails userDetails)) {
+            throw new IllegalStateException(
+                    "Unexpected authentication principal type"
+            );
+        }
 
-        assert userDetails != null;
-        User user = userRepository.findByUsername(userDetails.getUsername()).get();
-
-        String token = jwtService.generateToken(user);
+        String token = jwtService.generateToken(userDetails);
 
         return new AuthResponse(token);
     }
