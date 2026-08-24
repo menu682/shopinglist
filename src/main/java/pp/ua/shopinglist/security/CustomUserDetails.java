@@ -6,6 +6,7 @@ import pp.ua.shopinglist.persistence.security.entity.User;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 public class CustomUserDetails implements UserDetails {
 
@@ -26,8 +27,14 @@ public class CustomUserDetails implements UserDetails {
         );
     }
 
-    public Long getId() {
+    public long getId() {
         return id;
+    }
+
+    public boolean isAdmin() {
+        return authorities.stream()
+                .anyMatch(authority ->
+                        Objects.equals(authority.getAuthority(), "ROLE_ADMIN"));
     }
 
     @Override
