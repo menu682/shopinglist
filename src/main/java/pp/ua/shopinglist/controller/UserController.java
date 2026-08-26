@@ -17,9 +17,6 @@ public class UserController {
 
     private UserService userService;
 
-
-
-
     @GetMapping("/{id}")
     public ResponseEntity<UserResponce> getUser(@PathVariable String id, Authentication authentication) {
 
