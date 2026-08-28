@@ -43,13 +43,13 @@ public class ProductController {
     }
 
 
-    @PostMapping("/")
+    @PostMapping("")
     public ResponseEntity<ProductDto> createProduct(@RequestBody ProductDto productDto) {
         return ResponseEntity.ok(productService.createProduct(productDto));
     }
 
 
-    @PatchMapping("/")
+    @PatchMapping("")
     public ResponseEntity<ProductDto> updateProduct(@RequestBody ProductDto productDto) {
         return ResponseEntity.ok(productService.updateProduct(productDto));
     }

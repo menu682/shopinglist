@@ -70,8 +70,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 }
 
             } catch (JwtException | IllegalArgumentException e) {
-                // Invalid or expired JWT.
-                // User remains unauthenticated.
+                System.out.println("JWT ERROR: " + e);
             }
         }
 

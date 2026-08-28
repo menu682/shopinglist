@@ -3,6 +3,7 @@ package pp.ua.shopinglist.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import pp.ua.shopinglist.dto.core.ProductDto;
+import pp.ua.shopinglist.exception.ResourceAlreadyExistsException;
 import pp.ua.shopinglist.exception.ResourceNotFoundException;
 import pp.ua.shopinglist.persistence.model.entity.Product;
 import pp.ua.shopinglist.persistence.model.repository.ProductRepository;
@@ -31,7 +32,7 @@ public class ProductService {
 
     public ProductDto getProductByProductName(String productName) {
 
-        Product product = productRepository.findByProductName(productName)
+        Product product = productRepository.findByProductNameIgnoreCase(productName)
                 .orElseThrow(() ->
                         new ResourceNotFoundException("Product not found: " + productName)
                 );
@@ -60,6 +61,12 @@ public class ProductService {
 
 
     public ProductDto createProduct(ProductDto productDto) {
+
+        if (productRepository.findByProductNameIgnoreCase(productDto.name()).isPresent()) {
+            throw new ResourceAlreadyExistsException(
+                    "Product already exists: " + productDto.name()
+            );
+        }
 
         Product product = Product.builder()
                 .productName(productDto.name())
