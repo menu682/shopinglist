@@ -18,9 +18,9 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserResponce> getUser(@PathVariable String id, Authentication authentication) {
+    public ResponseEntity<UserResponce> getUser(@PathVariable Long id, Authentication authentication) {
 
-        UserResponce userResponce = userService.getUser(Long.parseLong(id), authentication);
+        UserResponce userResponce = userService.getUser(id, authentication);
 
         return ResponseEntity.ok(userResponce);
     }

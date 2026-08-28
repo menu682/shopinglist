@@ -24,8 +24,6 @@ CREATE TABLE users (
 CREATE TABLE products (
                           id BIGSERIAL PRIMARY KEY,
                           name VARCHAR(255) NOT NULL,
-                          unit VARCHAR(50) NOT NULL,
-                          last_price DECIMAL(10, 2),
 
                           CONSTRAINT uk_products_name UNIQUE (name)
 );
@@ -82,6 +80,7 @@ CREATE TABLE shopping_list_items (
                                      product_id BIGINT NOT NULL,
 
                                      quantity DECIMAL(10, 2) NOT NULL,
+                                     unit VARCHAR(20) NOT NULL,
                                      purchased_price DECIMAL(10, 2),
 
                                      status VARCHAR(50) NOT NULL DEFAULT 'ACTIVE',

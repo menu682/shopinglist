@@ -25,9 +25,7 @@ public class ProductService {
 
         return new ProductDto(
                 product.getId(),
-                product.getProductName(),
-                product.getUnit(),
-                product.getLastPrice()
+                product.getProductName()
                 );
     }
 
@@ -40,9 +38,7 @@ public class ProductService {
 
         return new ProductDto(
                 product.getId(),
-                product.getProductName(),
-                product.getUnit(),
-                product.getLastPrice());
+                product.getProductName());
     }
 
     public List<ProductDto> getAllProductsByProductNameContainingIgnoreCase(String productName) {
@@ -54,9 +50,9 @@ public class ProductService {
         for (Product product : products) {
             productDtos.add(new ProductDto(
                     product.getId(),
-                    product.getProductName(),
-                    product.getUnit(),
-                    product.getLastPrice()));
+                    product.getProductName()
+                    )
+            );
         }
 
         return productDtos;
@@ -67,17 +63,13 @@ public class ProductService {
 
         Product product = Product.builder()
                 .productName(productDto.name())
-                .unit(productDto.unit())
-                .lastPrice(productDto.lastPrice())
                 .build();
 
         Product savedProduct = productRepository.save(product);
 
         return new ProductDto(
                 savedProduct.getId(),
-                savedProduct.getProductName(),
-                savedProduct.getUnit(),
-                savedProduct.getLastPrice()
+                savedProduct.getProductName()
         );
     }
 
@@ -92,28 +84,40 @@ public class ProductService {
                         new ResourceNotFoundException("Product not found: " + productDto.name())
         );
 
+//TODO зробити перевірку перед зміною
+
+//        if (shoppingListItemRepository.existsByProductId(productDto.id())) {
+//            throw new IllegalStateException(
+//                    "Product is already used in shopping lists and cannot be modified"
+//            );
+//        }
+
         product.setProductName(productDto.name());
-        product.setUnit(productDto.unit());
-        product.setLastPrice(productDto.lastPrice());
 
         Product updatedProduct = productRepository.save(product);
 
         return new ProductDto(
                 updatedProduct.getId(),
-                updatedProduct.getProductName(),
-                updatedProduct.getUnit(),
-                updatedProduct.getLastPrice());
+                updatedProduct.getProductName());
     }
 
-    public void deleteProduct(Long id) {
+    public boolean deleteProduct(Long id) {
 
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(
                         "Product with id " + id + " not found"
                 ));
 
-        productRepository.delete(product);
+//TODO зробити перевірку перед видаленням
 
+//        if (shoppingListItemRepository.existsByProductId(productDto.id())) {
+//            throw new IllegalStateException(
+//                    "Product is already used in shopping lists and cannot be deleted"
+//            );
+//        }
+
+        productRepository.delete(product);
+        return true;
     }
 
 }
