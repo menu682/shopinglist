@@ -44,6 +44,9 @@ CREATE TABLE shopping_lists (
                                         REFERENCES users(id)
 );
 
+CREATE INDEX idx_shopping_lists_owner_id
+    ON shopping_lists(owner_id);
+
 
 -- =========================================================
 -- SHOPPING LIST MEMBERS

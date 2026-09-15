@@ -26,7 +26,7 @@ public class ProductService {
 
         return new ProductDto(
                 product.getId(),
-                product.getProductName()
+                product.getName()
                 );
     }
 
@@ -39,7 +39,7 @@ public class ProductService {
 
         return new ProductDto(
                 product.getId(),
-                product.getProductName());
+                product.getName());
     }
 
     public List<ProductDto> getAllProductsByProductNameContainingIgnoreCase(String productName) {
@@ -51,7 +51,7 @@ public class ProductService {
         for (Product product : products) {
             productDtos.add(new ProductDto(
                     product.getId(),
-                    product.getProductName()
+                    product.getName()
                     )
             );
         }
@@ -69,14 +69,14 @@ public class ProductService {
         }
 
         Product product = Product.builder()
-                .productName(productDto.name())
+                .name(productDto.name())
                 .build();
 
         Product savedProduct = productRepository.save(product);
 
         return new ProductDto(
                 savedProduct.getId(),
-                savedProduct.getProductName()
+                savedProduct.getName()
         );
     }
 
@@ -99,13 +99,13 @@ public class ProductService {
 //            );
 //        }
 
-        product.setProductName(productDto.name());
+        product.setName(productDto.name());
 
         Product updatedProduct = productRepository.save(product);
 
         return new ProductDto(
                 updatedProduct.getId(),
-                updatedProduct.getProductName());
+                updatedProduct.getName());
     }
 
     public boolean deleteProduct(Long id) {

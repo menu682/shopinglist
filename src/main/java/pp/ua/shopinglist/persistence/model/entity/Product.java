@@ -6,26 +6,37 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
+
+import java.util.Locale;
 
 @Entity
 @Table(name = "products")
-@NoArgsConstructor
-@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-@Setter
-@Builder
 public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
 
-    @Column(name = "name", nullable = false, unique = true)
-    String productName;
+    @Column(name = "name", nullable = false)
+    private String name;
+
+    @Builder
+    public Product(String name) {
+        this.name = normalize(name);
+    }
+
+    public void setName(String name) {
+        this.name = normalize(name);
+    }
+
+    private static String normalize(String name){
+        return name.trim().toUpperCase(Locale.ROOT);
+    }
 
 }
