@@ -13,11 +13,11 @@
     </parent>
 
     <groupId>pp.ua</groupId>
-    <artifactId>shopinglist</artifactId>
+    <artifactId>shoppinglist</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
-    <name>shopinglist</name>
-    <description>shopinglist</description>
+    <name>shoppinglist</name>
+    <description>shoppinglist</description>
 
     <properties>
         <java.version>25</java.version>
